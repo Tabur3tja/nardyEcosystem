@@ -2,6 +2,8 @@ import telebot
 import webbrowser
 import sqlite3
 from telebot import types
+import re
+
 
 bot = telebot.TeleBot('6870812177:AAFx3pZv96ETLcFPO7oVL25HI7ct3mVGwkA')
 #'https://t.me/b_nardy_bot?startgroup=pm'
@@ -58,9 +60,34 @@ def help(message):
                      ,parse_mode='html')
 @bot.message_handler(commands=['esupply'])
 def esupply(message):
+    #файл має зберігатися на сервері та відкриватися відповідно звідти
     file = open('./copium-4.mp4','rb')
     bot.send_video(message.chat.id,file,caption='*гравець* зібрав єДопомогу 🇺🇦 \nєМарки - 💰\nТЦКшники - 👮🏾‍♀️')
+@bot.message_handler(commands=['bayraktar'])
+def bayraktar(message):
+    num_bayraktar_str = message.text
+    splitted_bayraktar_num = num_bayraktar_str.split()
 
+
+    if len(splitted_bayraktar_num) == 2:
+        try:
+            num_bayraktar = int(splitted_bayraktar_num[1])
+        except ValueError:
+            bot.send_message(message.chat.id,'Введене некоректне числове значення')
+    elif len(splitted_bayraktar_num) == 1:
+        num_bayraktar = 1
+    else:
+        bot.send_message(message.chat.id, 'Не вдалось відбайрактарити')
+
+    if message.reply_to_message is not None and message.reply_to_message.from_user.is_bot is False:
+        bayraktared_user = message.reply_to_message.from_user.username
+        bot.send_message(message.chat.id, f'Ви @{message.from_user.username} відбайрактарили: @{bayraktared_user} {num_bayraktar} раз')
+    else:
+        bot.send_message(message.chat.id, 'Не вдалось відбайрактарити бота')
+
+@bot.message_handler(commands=['message'])
+def mess(message):
+    bot.send_message(message.chat.id,message)
 bot.polling(none_stop=True)
 
 
