@@ -65,6 +65,9 @@ def esupply(message):
     bot.send_video(message.chat.id,file,caption='*гравець* зібрав єДопомогу 🇺🇦 \nєМарки - 💰\nТЦКшники - 👮🏾‍♀️')
 @bot.message_handler(commands=['bayraktar'])
 def bayraktar(message):
+    #
+
+
     num_bayraktar_str = message.text
     splitted_bayraktar_num = num_bayraktar_str.split()
 
