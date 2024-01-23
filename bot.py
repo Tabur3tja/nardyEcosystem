@@ -57,8 +57,8 @@ def help(message):
                                     '\t 9.1.  По досягненню 5 рангу гравець перестає отримувати єМарки за єДопомогу, замість цього гравець отримує 18% з єДопомоги кожного гравця\n'
                                     '\t9.2.  Не можливо "відбайрактарити" кого-небудь, маючи 5 ранг\n'
                                     '\t9.3.  При досягненні кимось з гравців 4 рангу квоти "відбайрактарювань", при наявності Заступника Єрмака, гравець, який набрав квоту набуває 5 рангу, натомість поточний "Заступник", понижується до 4 рангу\n'
-                                    '10. Реєстрація'
-                                     '10.1. Для участі у грі вам необхідно зареєструватися для цього викличте команду  /registration у наступному вигляді "/registration ваше імя в Діскорд ; імя під яким ви гратимете у гру" '
+                                    '10. Реєстрація \n'
+                                     '\t10.1. Для участі у грі вам необхідно зареєструватися для цього викличте команду  /registration у наступному вигляді "/registration ваше імя в Діскорд ; імя під яким ви гратимете у гру" '
                      ,parse_mode='html')
 @bot.message_handler(commands=['esupply'])
 def esupply(message):
@@ -69,22 +69,6 @@ def bayraktar(message):
     num_bayraktar_str = message.text
     splitted_bayraktar_num = num_bayraktar_str.split()
 
-
-    if len(splitted_bayraktar_num) == 2:
-        try:
-            num_bayraktar = int(splitted_bayraktar_num[1])
-        except ValueError:
-            bot.send_message(message.chat.id,'Введене некоректне числове значення')
-    elif len(splitted_bayraktar_num) == 1:
-        num_bayraktar = 1
-    else:
-        bot.send_message(message.chat.id, 'Не вдалось відбайрактарити')
-
-    if message.reply_to_message is not None and message.reply_to_message.from_user.is_bot is False:
-        bayraktared_user = message.reply_to_message.from_user.username
-        bot.send_message(message.chat.id, f'Ви @{message.from_user.username} відбайрактарили: @{bayraktared_user} {num_bayraktar} раз')
-    else:
-        bot.send_message(message.chat.id, 'Не вдалось відбайрактарити бота')
 
 @bot.message_handler(commands=['message'])
 def mess(message):
