@@ -2,8 +2,7 @@ import telebot
 import webbrowser
 import sqlite3
 from telebot import types
-import re
-
+import requests
 
 bot = telebot.TeleBot('6870812177:AAFx3pZv96ETLcFPO7oVL25HI7ct3mVGwkA')
 #'https://t.me/b_nardy_bot?startgroup=pm'
@@ -62,14 +61,37 @@ def help(message):
                      ,parse_mode='html')
 @bot.message_handler(commands=['esupply'])
 def esupply(message):
+    
     #файл має зберігатися на сервері та відкриватися відповідно звідти
     bot.send_message(message.chat.id,'*гравець* зібрав єДопомогу 🇺🇦 \nєМарки - 💰\nТЦКшники - 👮🏾‍♀️')
 @bot.message_handler(commands=['bayraktar'])
 def bayraktar(message):
+
     num_bayraktar_str = message.text
     splitted_bayraktar_num = num_bayraktar_str.split()
 
-
+    if message.reply_to_message is not None:
+        bayraktared_user = message.reply_to_message.from_user.username
+        if len(splitted_bayraktar_num) == 1:
+            num_bayraktar = 1
+            bot.send_message(message.chat.id,f'Ви @{message.from_user.username} відбайрактарили: @{bayraktared_user} {num_bayraktar} раз')
+        elif len(splitted_bayraktar_num)==2:
+            if message.reply_to_message.from_user is not None and message.reply_to_message.from_user.is_bot is False:
+                if int(splitted_bayraktar_num[1])==0 or int(splitted_bayraktar_num[1]) < 0:
+                    bot.send_message(message.chat.id, 'Нізя на 0 або менше')
+                elif int(splitted_bayraktar_num[1]) is False:
+                    bot.send_message(message.chat.id, 'Цифрою напиши')
+                else:
+                    num_bayraktar = int(splitted_bayraktar_num[1])
+                    bot.send_message(message.chat.id,f'Ви @{message.from_user.username} відбайрактарили: @{bayraktared_user} {num_bayraktar} раз')
+            elif message.reply_to_message.from_user.is_bot is True:
+                bot.send_message(message.chat.id,'Лееееееее, бота не трож бо будеш забанений в кіберпросторі')
+            else:
+                bot.send_message(message.chat.id, 'Тіп, я тебе прошу просто зроби скриншот теї хуїти що ти ввів сюди, бо здорова людина не додумається пхати сюди щось настільки огидне богу')
+        else:
+            bot.send_message(message.chat.id,'Тіп, я тебе прошу просто зроби скриншот теї хуїти що ти ввів сюди, бо здорова людина не додумається пхати сюди щось настільки огидне богу')
+    else:
+        bot.send_message(message.chat.id, 'Повідомлення потрібно надсилати як відповідь на чиєсь повідомлення')
 @bot.message_handler(commands=['message'])
 def mess(message):
     bot.send_message(message.chat.id,message)
@@ -130,7 +152,10 @@ def contacts(message):
     markup.row(btn_url2, btn_url3)
     markup.row(btn_url4, btn_url5)
     bot.send_message(message.chat.id, 'Всі чатіки і контактіки людей які так чи інакше причасні до цього бота',reply_markup=markup)
-
+@bot.message_handler(commands=['test'])
+def test(message):
+    requests.get('https://nardy-bot-api-63668a228514.herokuapp.com/users/c8fdf4a5')
+    bot.send_message(message.chat.id,'Відправлено')
 bot.polling(none_stop=True)
 
 
