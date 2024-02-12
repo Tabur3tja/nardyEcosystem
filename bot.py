@@ -5,7 +5,7 @@ from telebot import types
 import re
 
 
-bot = telebot.TeleBot('6870812177:AAFx3pZv96ETLcFPO7oVL25HI7ct3mVGwkA')
+bot = telebot.TeleBot()
 #'https://t.me/b_nardy_bot?startgroup=pm'
 @bot.message_handler(commands=['start'])
 def main(message):
