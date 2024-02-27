@@ -6,10 +6,23 @@ import requests
 
 bot = telebot.TeleBot('6870812177:AAFx3pZv96ETLcFPO7oVL25HI7ct3mVGwkA')
 #'https://t.me/b_nardy_bot?startgroup=pm'
+@bot.message_handler(commands=['bebra'])
+def main(message):
+    bot.send_message(message.chat.id,message)
 @bot.message_handler(commands=['start'])
 def main(message):
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton('Додати бот до чату', 'https://t.me/b_nardy_bot?startgroup=pm'))
+    user_sign_in = requests.post("https://",
+{"bot_token": "bot",
+
+  "requester":
+  {
+    "id": "type.string",
+    "telegramID": "message.from_user.id",
+    "discordID": "type.string",
+  }
+ })
     bot.send_message(message.chat.id,f'Привіт {message.from_user.first_name}',reply_markup=markup)
 @bot.message_handler(commands=['help'])
 def help(message):
@@ -152,10 +165,10 @@ def contacts(message):
     markup.row(btn_url2, btn_url3)
     markup.row(btn_url4, btn_url5)
     bot.send_message(message.chat.id, 'Всі чатіки і контактіки людей які так чи інакше причасні до цього бота',reply_markup=markup)
-@bot.message_handler(commands=['test'])
-def test(message):
-    requests.get('https://nardy-bot-api-63668a228514.herokuapp.com/users/c8fdf4a5')
-    bot.send_message(message.chat.id,'Відправлено')
+# @bot.message_handler(commands=['test'])
+# def test(message):
+#     user = requests.get('nardy-bot-api/routes/routes/users')
+#     bot.send_message(message.chat.id,f'Відправлено {user}')
 bot.polling(none_stop=True)
 
 
