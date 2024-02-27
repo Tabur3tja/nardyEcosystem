@@ -4,7 +4,7 @@ import sqlite3
 from telebot import types
 import requests
 
-bot = telebot.TeleBot('6870812177:AAFx3pZv96ETLcFPO7oVL25HI7ct3mVGwkA')
+bot = telebot.TeleBot()
 #'https://t.me/b_nardy_bot?startgroup=pm'
 @bot.message_handler(commands=['bebra'])
 def main(message):
